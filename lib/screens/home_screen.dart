@@ -21,13 +21,19 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('Insurance Projects'),
       ),
-      body: Consumer<ProjectsProvider>(builder: (context, projectsData, child) {
-        return projectsData.projects.isEmpty
-            ? Center(child: Text("No Projects Added"))
-            : ListView.builder(
-                itemCount: projectsData.projects.length,
-                itemBuilder: (ctx, i) => ProjectItem(projectsData.projects[i]));
-      }),
+      body: Column(children: [
+        Consumer<ProjectsProvider>(builder: (context, projectsData, child) {
+          return projectsData.projects.isEmpty
+              ? Center(child: Text("No Projects Added"))
+              : ListView.builder(
+                  itemCount: projectsData.projects.length,
+                  itemBuilder: (ctx, i) =>
+                      ProjectItem(projectsData.projects[i]));
+        }),
+        ElevatedButton(
+            onPressed: () => Navigator.of(context).pushNamed('/new_project'),
+            child: const Text('Add Project'))
+      ]),
     );
   }
 }
